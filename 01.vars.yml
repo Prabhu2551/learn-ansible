@@ -1,8 +1,29 @@
 - name: Demo on variables
-  hosts: all
+  hosts: localhost
   vars:
   URL: sample.com
   tasks:
    - name: Print URL variables
      ansible.builtin.debug:
        msg: "{{ URL }}"
+
+       -- task level variable having higher priority than play level variable,
+       --  and also command level variable having highest priority than task level variable.
+
+- name: demo on task variables
+  hosts: localhost
+  vars:
+  URL1: example.com
+  URL2: example.com
+
+  tasks:
+    - name: print URL1 variables
+      ansible.builtin.debug:
+       msg: "{{ URL1 }}"
+      vars:
+      URL1: sample.com
+    - name: print URL2 variables
+      ansible.builtin.debug:
+       msg: "{{ URL2 }}"
+      vars:
+      URL2: sample.com
